@@ -2,12 +2,17 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Java P1">
   <meta name="theme-color" content="#f7f8fa">
   <meta name="description" content="Studia Java P1 con lezioni, esempi guidati e quiz commentati. Scopri cosa ripassare e segui i tuoi progressi.">
   <title>Java, passo passo — Il tuo spazio per imparare</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="stylesheet" href="./style.css?v=mobile-3">
 </head>
 <body>
   <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -32,9 +37,8 @@
     <form id="settings-form">
       <div class="section-heading"><div><span class="eyebrow">IL TUO SPAZIO</span><h2 id="settings-title">Impostazioni e tutor</h2></div><button type="button" class="icon-button" data-action="close-settings" aria-label="Chiudi">×</button></div>
       <label for="nickname">Come ti chiami? <span class="muted">(anche un soprannome)</span></label><input id="nickname" maxlength="50" placeholder="Es. Alex" autocomplete="nickname">
-      <hr><h3>Resoconti su Discord</h3><p class="muted">Se attivi l'invio, il tutor riceve il soprannome, ogni risposta sbagliata e il riepilogo con voto, argomenti ed errori. Nessun dato di contatto richiesto.</p>
-      <label for="webhook">Webhook Discord del tutor</label><input id="webhook" type="password" autocomplete="off" placeholder="https://canary.discord.com/api/webhooks/…" spellcheck="false"><p class="field-help">Resta solo in questa scheda del browser e non viene incluso nel sito pubblico. Incolla qui l'indirizzo del tutor. Su un altro dispositivo va reinserito.</p>
-      <label class="check-row"><input type="checkbox" id="discord-enabled"> Attiva l'invio degli errori e dei risultati a Discord</label><p class="field-help">Un sito statico non può nascondere un webhook a chi lo usa. Per una classe, puoi usare in alternativa il resoconto scaricabile.</p>
+      <hr><h3>Invio automatico al tutor</h3><p class="muted">Il collegamento Discord del tutor è già configurato ed è sempre attivo. Ogni risposta errata e il risultato finale vengono inviati automaticamente insieme al tuo soprannome, agli argomenti e alle spiegazioni.</p>
+      <p class="field-help">Se un invio non riesce, il quiz resta salvato e puoi riprovare dal risultato. Il webhook è incluso nei sorgenti del sito statico.</p>
       <div id="settings-error" class="error-message" role="alert"></div><button class="button primary full" type="submit">Salva impostazioni <span>✓</span></button>
     </form>
   </dialog>
@@ -48,5 +52,6 @@
   <script src="./data/eccezioni-stream.js"></script>
   <script src="./core.js"></script>
   <script src="./app.js"></script>
+  <script src="./pwa.js"></script>
 </body>
 </html>

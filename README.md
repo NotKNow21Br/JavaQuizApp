@@ -52,22 +52,23 @@ Alla scadenza o alla terminazione anticipata, le domande non visitate sono **ome
 
 I dati sono salvati nel `localStorage` del browser, non condivisi automaticamente tra dispositivi. Il quiz in corso riprende dopo una ricarica; il tempo per rispondere continua a trascorrere anche se si chiude la pagina, mentre resta fermo se si era nella correzione. La navigazione chiede di terminare il quiz prima di uscire. In modalità privata o se la memoria è bloccata, scarica il resoconto prima di chiudere.
 
-## Discord: attivazione per il tutor
+## Discord: invio automatico al tutor
 
-L'indirizzo del webhook **non è incluso nel repository o nel pacchetto pubblico**.
+Come richiesto dal tutor, il webhook è fisso in `app.js` e l'invio è sempre attivo, senza configurazione da parte dello studente. Il sito invia il soprannome, l'argomento, la domanda e la spiegazione di ogni risposta errata; alla fine invia il voto con un file JSON del quiz completo. Non viene richiesto un contatto personale. Le menzioni Discord sono disattivate.
 
-1. Apri **Impostazioni e tutor** (da telefono, tocca il profilo in alto).
-2. Inserisci un nome o soprannome e incolla il webhook Discord fornito dal tutor.
-3. Seleziona **Attiva l'invio degli errori e dei risultati a Discord** e salva.
+Un errore di rete viene segnalato: il quiz resta salvato e il pulsante «Riprova invii falliti» ritenta la consegna. In caso di timeout dopo una ricezione già avvenuta, un tentativo manuale può produrre un duplicato. Il resoconto scaricabile è sempre disponibile. Per Discord serve Internet anche quando il sito è installato sul telefono. Nei test si usano solo richieste simulate.
 
-Il webhook resta nel `sessionStorage` di questa scheda: va reinserito su un altro dispositivo o alla chiusura della sessione. Quando l'invio è attivo, il sito invia:
+Il webhook è visibile nel codice pubblico, come qualsiasi indirizzo usato direttamente da un sito statico. Il tutor può sostituirlo in `app.js` se necessario.
 
-- **a ogni risposta errata**, soprannome, argomento, domanda/codice, risposta scelta, corretta, spiegazione e conteggio provvisorio;
-- **al termine di ogni quiz**, voto e conteggi con un file JSON allegato contenente tutti gli argomenti, le domande, gli errori e le correzioni.
+## Versione telefono e installazione
 
-I messaggi disattivano le menzioni Discord. Non viene richiesto un contatto personale. Gli invii sono serializzati; errori di rete, CORS, webhook eliminato o limiti Discord vengono segnalati. Il risultato rimane salvato. Il pulsante **Riprova invii falliti** ritenta gli invii non confermati, finché la scheda conserva la coda. In caso di timeout dopo una ricezione già avvenuta, un tentativo manuale può produrre un duplicato. Il resoconto scaricabile è disponibile anche senza Discord.
+Fino a 1024 pixel il sito usa il layout mobile: menu in basso, contenuti a colonna singola sui telefoni, testi e pulsanti più grandi. Il layout desktop oltre 1024 pixel è invariato. Se il browser del telefono forza l'opzione «Sito desktop», disattivala per usare la larghezza reale del dispositivo.
 
-**Limite di GitHub Pages:** un sito statico non può mantenere segreto un webhook che usa nel browser. L'impostazione locale evita di pubblicarlo nei sorgenti, ma chi lo inserisce può leggerlo. Per invii automatici da una classe senza distribuire il webhook, serve un piccolo servizio/proxy con il webhook conservato lato server. Se l'indirizzo è stato condiviso pubblicamente, rigeneralo su Discord. Gli invii reali al webhook fornito non sono stati effettuati durante i test; trasporto, payload, coda, errori e tentativi sono stati verificati con richieste simulate.
+In alto compare l'invito «Installa l’app». Su Android il browser può mostrare il proprio pannello di installazione dopo il tocco. Su iPhone si seguono le istruzioni per Safari → Condividi → Aggiungi alla schermata Home. Non si può completare l'installazione senza un'azione dell'utente. Quando l'app è aperta dalla Home, l'invito non compare.
+
+`manifest.webmanifest`, `pwa.js`, `sw.js`, `apple-touch-icon.png` e la cartella `icons` devono essere pubblicati insieme agli altri file. GitHub Pages fornisce HTTPS, necessario all'installazione e alla cache offline. Dopo una prima visita online completata, lezioni, quiz e PDF sono disponibili offline. Lo storico resta locale e non si sincronizza automaticamente tra dispositivi o browser.
+
+Il service worker intercetta solo i file pubblici del sito e non le richieste Discord. Gli aggiornamenti delle pagine vengono recuperati dalla rete quando disponibile; per gli asset viene aggiornata la cache in background. Dopo una nuova pubblicazione, se vedi ancora una vecchia versione ricarica nuovamente la pagina.
 
 ## Sviluppo locale e controlli
 
