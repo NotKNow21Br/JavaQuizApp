@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="Studia Java P1 con lezioni, esempi guidati e quiz commentati. Scopri cosa ripassare e segui i tuoi progressi.">
+  <title>Java, passo passo — Il tuo spazio per imparare</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Vai al contenuto</a>
+  <aside class="sidebar">
+    <a class="brand" href="#home" aria-label="Java passo passo, inizio"><span class="brand-icon">J<span aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 10 10 2M3 2h7v7"/></svg></span></span><span>java<span class="brand-dot">.</span><small>PASSO PASSO</small></span></a>
+    <div class="sidebar-label">IL TUO SPAZIO DI STUDIO</div>
+    <nav aria-label="Navigazione principale" id="navigation">
+      <a href="#home" data-nav="home"><span data-icon="home"></span><span>Panoramica</span></a>
+      <a href="#studio" data-nav="studio"><span data-icon="book"></span><span>Studia gli argomenti</span></a>
+      <a href="#quiz" data-nav="quiz"><span data-icon="bolt"></span><span>Mettiti alla prova</span></a>
+      <a href="#progressi" data-nav="progressi"><span data-icon="chart"></span><span>I tuoi progressi</span></a>
+      <a href="#materiali" data-nav="materiali"><span data-icon="folder"></span><span>Materiali del corso</span></a>
+    </nav>
+    <div class="sidebar-bottom"><div class="mini-tip"><span class="eyebrow">UN PASSO ALLA VOLTA</span><p>Sbagliare fa parte del percorso. Capire il perché fa la differenza.</p><span class="tip-decoration">{ }</span></div><button class="settings-link" data-action="settings"><span data-icon="settings"></span> Impostazioni e tutor</button><small class="local-note">I progressi restano nel tuo browser.</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div><span class="topbar-course">Il tuo percorso</span><span class="separator">/</span><strong>Java P1</strong><span class="pill quiet">FONDAMENTI</span></div><button class="profile-button" data-action="settings"><span class="avatar" id="avatar">S</span><span id="profile-name">Studente</span><span data-icon="chevron"></span></button></header>
+    <main id="main" tabindex="-1"></main>
+    <footer class="footer"><span>Java, passo passo <span class="footer-dot">•</span> Impara. Prova. Comprendi.</span><span>Basato sui tuoi materiali Java P1</span></footer>
+  </div>
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <form id="settings-form">
+      <div class="section-heading"><div><span class="eyebrow">IL TUO SPAZIO</span><h2 id="settings-title">Impostazioni e tutor</h2></div><button type="button" class="icon-button" data-action="close-settings" aria-label="Chiudi">×</button></div>
+      <label for="nickname">Come ti chiami? <span class="muted">(anche un soprannome)</span></label><input id="nickname" maxlength="50" placeholder="Es. Alex" autocomplete="nickname">
+      <hr><h3>Resoconti su Discord</h3><p class="muted">Se attivi l'invio, il tutor riceve il soprannome, ogni risposta sbagliata e il riepilogo con voto, argomenti ed errori. Nessun dato di contatto richiesto.</p>
+      <label for="webhook">Webhook Discord del tutor</label><input id="webhook" type="password" autocomplete="off" placeholder="https://canary.discord.com/api/webhooks/…" spellcheck="false"><p class="field-help">Resta solo in questa scheda del browser e non viene incluso nel sito pubblico. Incolla qui l'indirizzo del tutor. Su un altro dispositivo va reinserito.</p>
+      <label class="check-row"><input type="checkbox" id="discord-enabled"> Attiva l'invio degli errori e dei risultati a Discord</label><p class="field-help">Un sito statico non può nascondere un webhook a chi lo usa. Per una classe, puoi usare in alternativa il resoconto scaricabile.</p>
+      <div id="settings-error" class="error-message" role="alert"></div><button class="button primary full" type="submit">Salva impostazioni <span>✓</span></button>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="noscript">Attiva JavaScript per usare lezioni, quiz e progressi. I PDF sono disponibili nella cartella materiali.</p></noscript>
+  <script>window.JAVA_TOPICS = [];</script>
+  <script src="./data/fondamenti-input.js"></script>
+  <script src="./data/tipi-math.js"></script>
+  <script src="./data/condizioni-cicli.js"></script>
+  <script src="./data/array-metodi.js"></script>
+  <script src="./data/eccezioni-stream.js"></script>
+  <script src="./core.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
