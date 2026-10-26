@@ -35,7 +35,12 @@
   let state = {nickname:typeof saved.nickname === 'string' ? saved.nickname : '', history:Array.isArray(saved.history) ? saved.history.filter(r=>r && Array.isArray(r.details) && Array.isArray(r.topics)).slice(-30) : [], lessons:Array.isArray(saved.lessons) ? saved.lessons : []};
   let session = read(localStorage,KEY+'-active',null);
   if(session && (!Array.isArray(session.deck) || !session.deck.length || !session.answers || session.deck.some(d=>!questionMap.has(d.id) || !Array.isArray(d.order)) || !Number.isInteger(session.index) || session.index<0 || session.index>=session.deck.length)) session=null;
-  let discord = read(sessionStorage,KEY+'-discord',{url:'',enabled:false});
+  // Webhook fisso del tutor: invio automatico sempre attivo.
+  // Essendo un sito statico, questo indirizzo è visibile nei sorgenti pubblici.
+  const discord = Object.freeze({
+    url:'https://canary.discord.com/api/webhooks/1564303322087694519/QRVgA1jXcdjRbr4RzmmkEoDXlEeuh74f39NC6ko3XrjiJNwmC7I0ZXKbX68spIk4zfVv',
+    enabled:true
+  });
   let notifications = read(sessionStorage,KEY+'-outbox',[]);
   if(!Array.isArray(notifications)) notifications=[];
   let delivering=false;
@@ -212,10 +217,19 @@
   }
   function refreshDelivery() {if($('#delivery-status'))$('#delivery-status').textContent=notificationStatus();}
   function validWebhook(value) {try {const url=new URL(value);return url.protocol==='https:' && ['discord.com','canary.discord.com','ptb.discord.com'].includes(url.hostname) && /^\/api(?:\/v\d+)?\/webhooks\/\d+\/[A-Za-z0-9_-]+$/.test(url.pathname) && !url.username && !url.password && !url.port && !url.search && !url.hash;}catch{return false;}}
-  function openSettings() {$('#nickname').value=state.nickname;$('#webhook').value=discord.url;$('#discord-enabled').checked=discord.enabled;$('#settings-error').textContent='';$('#settings-dialog').showModal();}
-  $('#settings-form').addEventListener('submit',e=>{e.preventDefault();const url=$('#webhook').value.trim(),enabled=$('#discord-enabled').checked;
-    if((url || enabled)&&!validWebhook(url)){$('#settings-error').textContent='Inserisci un webhook HTTPS valido di discord.com o canary.discord.com, senza parametri aggiuntivi.';return;}
-    state.nickname=$('#nickname').value.trim().slice(0,50);discord={url,enabled};save();write(sessionStorage,KEY+'-discord',discord);profile();$('#settings-dialog').close();toast('Impostazioni salvate.');if(!session)route();deliver();
+  function openSettings() {
+    $('#nickname').value=state.nickname;
+    const separator=$('#settings-form hr');
+    let node=separator.nextElementSibling;
+    while(node && node.id!=='settings-error') {
+      const nextNode=node.nextElementSibling;
+      node.remove();node=nextNode;
+    }
+    separator.insertAdjacentHTML('afterend','<h3>Invio automatico al tutor</h3><p class="muted">Il collegamento Discord del tutor è già configurato ed è sempre attivo. Ogni risposta errata e il risultato finale vengono inviati automaticamente, insieme al tuo soprannome, agli argomenti e alle spiegazioni. Non devi incollare indirizzi o attivare opzioni.</p><p class="field-help">Se un invio non riesce, il quiz resta salvato e puoi riprovare dal risultato. Il webhook è incluso nei sorgenti del sito statico.</p>');
+    $('#settings-error').textContent='';$('#settings-dialog').showModal();
+  }
+  $('#settings-form').addEventListener('submit',e=>{e.preventDefault();
+    state.nickname=$('#nickname').value.trim().slice(0,50);save();profile();$('#settings-dialog').close();toast('Impostazioni salvate. Invio automatico al tutor attivo.');if(!session)route();deliver();
   });
   document.addEventListener('change',e=>{if(e.target.closest('#quiz-form'))updateSetup();});
   document.addEventListener('submit',e=>{if(e.target.id==='quiz-form'){e.preventDefault();startQuiz();}});
